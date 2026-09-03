@@ -59,10 +59,18 @@ app.get('/productos/:id', (req, res) => {
 
 // Crear un nuevo producto
 app.post('/productos', (req, res) => {
+    const { nombre, precio } = req.body;
+
+    if (!nombre || precio === undefined) {
+        return res.status(400).json({
+            mensaje: 'Nombre y precio son obligatorios'
+        });
+    }
+
     const nuevoProducto = {
         id: productos.length + 1,
-        nombre: req.body.nombre,
-        precio: req.body.precio
+        nombre: nombre,
+        precio: precio
     };
 
     productos.push(nuevoProducto);
